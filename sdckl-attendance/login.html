@@ -10,32 +10,42 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f9fafb;
+      background: linear-gradient(to right, #b91c1c 50%, #ffffff 50%);
+      min-height: 100vh;
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h1 class="text-2xl font-semibold mb-6 text-center text-gray-900">SDCKL Attendance Login</h1>
-    <form id="loginForm" class="space-y-6" novalidate>
-      <div>
-        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-        <input type="text" id="username" name="username" required
-          class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <p id="usernameError" class="text-red-600 text-sm mt-1 hidden">Please enter your username.</p>
-      </div>
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" id="password" name="password" required
-          class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <p id="passwordError" class="text-red-600 text-sm mt-1 hidden">Please enter your password.</p>
-      </div>
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center space-x-2">
-        <i class="fas fa-sign-in-alt"></i>
-        <span>Login</span>
-      </button>
-    </form>
-    <p id="errorMsg" class="mt-4 text-red-600 text-sm hidden">Invalid username or password.</p>
+<body class="min-h-screen flex">
+  <div class="hidden md:flex md:w-1/2 bg-red-700 items-center justify-center">
+    <div class="text-white text-center p-10">
+      <i class="fas fa-user-graduate fa-5x mb-6"></i>
+      <h1 class="text-4xl font-bold mb-4">Welcome to SDCKL Attendance</h1>
+      <p class="text-lg">Secure Biometric Student Attendance Management System</p>
+    </div>
+  </div>
+  <div class="w-full md:w-1/2 flex items-center justify-center bg-white p-8">
+    <div class="w-full max-w-md">
+      <h1 class="text-3xl font-semibold mb-8 text-center text-red-700">Login to Your Account</h1>
+      <form id="loginForm" class="space-y-6" novalidate>
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+          <input type="text" id="username" name="username" required
+            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" />
+          <p id="usernameError" class="text-red-600 text-sm mt-1 hidden">Please enter your username.</p>
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input type="password" id="password" name="password" required
+            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" />
+          <p id="passwordError" class="text-red-600 text-sm mt-1 hidden">Please enter your password.</p>
+        </div>
+        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition flex items-center justify-center space-x-2">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Login</span>
+        </button>
+      </form>
+      <p id="errorMsg" class="mt-4 text-red-600 text-sm hidden">Invalid username or password.</p>
+    </div>
   </div>
 
   <script>

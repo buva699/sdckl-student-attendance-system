@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDCKL Attendance - Biometric Attendance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50 flex flex-col">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-900">SDCKL Biometric Attendance</h1>
+    <div>
+      <button id="logoutBtn" class="text-red-600 hover:text-red-800 font-semibold">Logout</button>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Biometric Scan Panel -->
+    <section class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+      <i class="fas fa-fingerprint text-6xl text-teal-600 mb-4"></i>
+      <button id="startScanBtn" class="bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition font-semibold focus:outline-none focus:ring-2 focus:ring-teal-400">
+        Start Biometric Scan
+      </button>
+      <div id="scanStatus" class="mt-4 text-center text-gray-700"></div>
+      <div id="scannedStudent" class="mt-4 text-center text-gray-900 font-semibold"></div>
+    </section>
+
+    <!-- Attendance Summary -->
+    <section class="md:col-span-2 bg-white rounded-lg shadow p-6 overflow-auto">
+      <h2 class="text-xl font-semibold mb-4">Today's Attendance Summary</h2>
+      <table class="min-w-full table-auto border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-teal-600 text-white">
+            <th class="border border-gray-300 px-4 py-2 text-left">Student ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Name</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Attendance Status</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Last Scan Time</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTableBody" class="text-gray-900">
+          <!-- Rows will be populated by JS -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="bg-white shadow p-4 text-center text-gray-600 text-sm">
+    &copy; 2024 SDCKL Attendance Management System
+  </footer>
+
+  <script src="attendance.js"></script>
+</body>
+</html>

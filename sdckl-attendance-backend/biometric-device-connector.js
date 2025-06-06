@@ -12,8 +12,8 @@ const API_BASE_URL = 'http://localhost:3001/api';
 const API_TOKEN = 'YOUR_API_TOKEN_HERE'; // Replace with a valid token or implement auth
 
 // Replace with your biometric device's USB vendorId and productId
-const VENDOR_ID = 0x1234;  // Example vendor ID
-const PRODUCT_ID = 0x5678; // Example product ID
+const VENDOR_ID = 0x0408;  // Actual vendor ID from your device
+const PRODUCT_ID = 0x5090; // Actual product ID from your device
 
 let device = null;
 let reconnectTimeout = null;

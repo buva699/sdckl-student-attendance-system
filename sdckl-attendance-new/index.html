@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDCKL Attendance - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-50">
+  <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">SDCKL Attendance Login</h1>
+    <form id="loginForm" class="space-y-6" novalidate>
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" id="username" name="username" required autocomplete="username" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+        <p id="usernameError" class="text-red-600 text-sm mt-1 hidden">Username is required.</p>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+        <p id="passwordError" class="text-red-600 text-sm mt-1 hidden">Password is required.</p>
+      </div>
+      <div>
+        <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition font-semibold focus:outline-none focus:ring-2 focus:ring-teal-400">Login</button>
+      </div>
+      <p id="errorMsg" class="text-red-600 text-sm mt-2 hidden"></p>
+      <p class="text-sm mt-4 text-center">
+        <a href="#" id="forgotPasswordLink" class="text-teal-600 hover:underline">Forgot Password?</a>
+      </p>
+    </form>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

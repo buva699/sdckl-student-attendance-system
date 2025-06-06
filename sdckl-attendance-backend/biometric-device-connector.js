@@ -7,7 +7,6 @@
  */
 
 const HID = require('node-hid');
-const fetch = require('node-fetch');
 
 const API_BASE_URL = 'http://localhost:3001/api';
 const API_TOKEN = 'YOUR_API_TOKEN_HERE'; // Replace with a valid token or implement auth
@@ -18,6 +17,29 @@ const PRODUCT_ID = 0x5678; // Example product ID
 
 let device = null;
 let reconnectTimeout = null;
+
+async function sendScanData(studentId, status) {
+  const fetch = (await import('node-fetch')).default;
+  try {
+    const response = await fetch(`${API_BASE_URL}/biometric/scan`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + API_TOKEN
+      },
+      body: JSON.stringify({ studentId, status })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Failed to send scan data:', errorData.error || response.statusText);
+    } else {
+      console.log('Scan data sent successfully.');
+    }
+  } catch (err) {
+    console.error('Error sending scan data:', err);
+  }
+}
 
 function connectDevice() {
   try {
@@ -31,21 +53,7 @@ function connectDevice() {
 
         console.log(`Scan detected: Student ID=${studentId}, Status=${status}`);
 
-        const response = await fetch(`${API_BASE_URL}/biometric/scan`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + API_TOKEN
-          },
-          body: JSON.stringify({ studentId, status })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('Failed to send scan data:', errorData.error || response.statusText);
-        } else {
-          console.log('Scan data sent successfully.');
-        }
+        await sendScanData(studentId, status);
       } catch (err) {
         console.error('Error processing scan data:', err);
       }

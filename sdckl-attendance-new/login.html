@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - SDCKL Student Attendance System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center px-4">
+  <header class="mb-8 text-center">
+    <h1 class="text-3xl font-extrabold text-blue-600">SDCKL</h1>
+    <p class="mt-2 text-xl font-semibold text-gray-900">Sign in to your account</p>
+  </header>
+
+  <main class="w-full max-w-md space-y-6">
+    <!-- Biometric Authentication Card -->
+    <section
+      class="bg-white rounded-lg shadow-md p-6 text-center"
+      aria-labelledby="biometric-title"
+    >
+      <h2
+        id="biometric-title"
+        class="text-lg font-semibold text-gray-800 mb-4 text-left"
+      >
+        Biometric Authentication
+      </h2>
+      <button
+        id="fingerprint-btn"
+        aria-label="Start biometric authentication"
+        class="mx-auto mb-3 flex items-center justify-center w-20 h-20 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <i class="fas fa-fingerprint fa-3x"></i>
+      </button>
+      <p class="text-sm text-gray-600">
+        Click the fingerprint icon to start biometric authentication
+      </p>
+      <p id="scan-status" class="mt-2 text-sm italic text-gray-400">Idle</p>
+    </section>
+
+    <!-- Admin Login Card -->
+    <section
+      class="bg-white rounded-lg shadow-md p-6"
+      aria-labelledby="admin-login-title"
+    >
+      <h2
+        id="admin-login-title"
+        class="text-lg font-semibold text-gray-800 mb-4"
+      >
+        Admin Login
+      </h2>
+      <form id="login-form" action="#" method="POST" class="space-y-4" novalidate>
+        <div>
+          <label for="username" class="sr-only">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required
+            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label for="password" class="sr-only">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="inline-flex items-center text-sm text-gray-700">
+            <input
+              type="checkbox"
+              id="remember"
+              name="remember"
+              class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            <span class="ml-2">Remember me</span>
+          </label>
+          <a
+            href="#"
+            class="text-sm text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Forgot your password?
+          </a>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Sign in
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="mt-8">
+    <a
+      href="index.html"
+      class="text-blue-600 text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >Back to Home</a
+    >
+  </footer>
+
+  <script>
+    const fingerprintBtn = document.getElementById('fingerprint-btn');
+    const scanStatus = document.getElementById('scan-status');
+
+    fingerprintBtn.addEventListener('click', async () => {
+      fingerprintBtn.disabled = true;
+      scanStatus.textContent = 'Scanning...';
+
+      // Simulate biometric scan delay
+      setTimeout(() => {
+        scanStatus.textContent = 'Authentication successful';
+        fingerprintBtn.disabled = false;
+
+        // Simulate fetching user info and setting session
+        sessionStorage.setItem('sdcklLoggedIn', 'true');
+        sessionStorage.setItem('sdcklUser', JSON.stringify({ username: 'biometricUser' }));
+
+        // Redirect to dashboard or home page
+        window.location.href = 'index.html';
+      }, 2000);
+    });
+
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!loginForm.checkValidity()) {
+        loginForm.reportValidity();
+        return;
+      }
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      const API_BASE_URL = 'http://localhost:3001/api'; // Backend API base URL
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          alert('Login failed: ' + (errorData.error || 'Invalid credentials'));
+          return;
+        }
+        const data = await response.json();
+        // Save token or session info as needed
+        sessionStorage.setItem('sdcklLoggedIn', 'true');
+        sessionStorage.setItem('sdcklUser', JSON.stringify(data.user));
+        window.location.href = 'index.html';
+      } catch (error) {
+        alert('Login error: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

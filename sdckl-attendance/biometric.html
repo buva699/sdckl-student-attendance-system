@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDCKL Attendance - Biometric Attendance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Top Navigation -->
+  <header class="bg-teal-600 text-white shadow-md">
+    <div class="container mx-auto flex items-center justify-between px-6 py-4">
+      <div class="flex items-center space-x-3">
+        <i class="fas fa-user-graduate fa-lg"></i>
+        <span class="text-2xl font-semibold tracking-wide">SDCKL Attendance</span>
+      </div>
+      <nav class="space-x-6 hidden md:flex">
+        <a href="dashboard.html" class="hover:text-teal-300 transition font-medium">Dashboard</a>
+        <a href="students.html" class="hover:text-teal-300 transition font-medium">Students</a>
+        <a href="classes.html" class="hover:text-teal-300 transition font-medium">Classes</a>
+        <a href="attendance.html" class="hover:text-teal-300 transition font-medium">Attendance</a>
+        <a href="biometric.html" class="hover:text-teal-300 transition font-bold underline">Biometric</a>
+        <a href="reports.html" class="hover:text-teal-300 transition font-medium">Reports</a>
+        <a href="#" class="cursor-not-allowed opacity-50" title="Coming soon" aria-disabled="true">Settings</a>
+      </nav>
+      <button id="mobileMenuBtn" class="md:hidden focus:outline-none" aria-label="Open menu">
+        <i class="fas fa-bars fa-lg"></i>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <nav id="mobileMenu" class="hidden bg-teal-700 text-white px-6 py-4 space-y-3 md:hidden">
+      <a href="dashboard.html" class="block hover:text-teal-300 transition font-medium">Dashboard</a>
+      <a href="students.html" class="block hover:text-teal-300 transition font-medium">Students</a>
+      <a href="classes.html" class="block hover:text-teal-300 transition font-medium">Classes</a>
+      <a href="attendance.html" class="block hover:text-teal-300 transition font-medium">Attendance</a>
+      <a href="biometric.html" class="block hover:text-teal-300 transition font-bold underline">Biometric</a>
+      <a href="reports.html" class="block hover:text-teal-300 transition font-medium">Reports</a>
+      <a href="#" class="block cursor-not-allowed opacity-50" title="Coming soon" aria-disabled="true">Settings</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-6 py-8 space-y-10">
+    <!-- Biometric Scan Controls -->
+    <section class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-2xl font-semibold mb-4">Biometric Scan</h2>
+      <div class="flex flex-wrap items-center space-x-4 mb-4">
+        <button id="startScanBtn" class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition shadow-md focus:outline-none focus:ring-2 focus:ring-green-400 font-semibold">
+          <i class="fas fa-play mr-2"></i>Start Scan
+        </button>
+        <button id="pauseScanBtn" class="bg-yellow-500 text-white px-5 py-2 rounded-lg hover:bg-yellow-600 transition shadow-md focus:outline-none focus:ring-2 focus:ring-yellow-400 font-semibold hidden">
+          <i class="fas fa-pause mr-2"></i>Pause Scan
+        </button>
+        <button id="cancelScanBtn" class="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition shadow-md focus:outline-none focus:ring-2 focus:ring-red-400 font-semibold hidden">
+          <i class="fas fa-stop mr-2"></i>Cancel Scan
+        </button>
+      </div>
+      <p id="scanStatus" class="text-lg font-medium mb-2">Idle</p>
+      <p id="scannedStudent" class="text-gray-700"></p>
+    </section>
+
+    <!-- Biometric Enrollment -->
+    <section class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-2xl font-semibold mb-4">Enroll Biometric Data</h2>
+      <form id="enrollForm" class="space-y-4 max-w-md">
+        <div>
+          <label for="enrollStudentId" class="block text-sm font-medium text-gray-700 mb-1">Student ID</label>
+          <input type="text" id="enrollStudentId" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Enter student ID" required />
+        </div>
+        <div>
+          <label for="biometricData" class="block text-sm font-medium text-gray-700 mb-1">Biometric Data</label>
+          <textarea id="biometricData" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400" placeholder="Enter biometric data" required></textarea>
+        </div>
+        <button type="submit" id="enrollBtn" class="bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 font-semibold">
+          Enroll
+        </button>
+        <p id="enrollStatus" class="mt-2 font-medium"></p>
+      </form>
+    </section>
+
+    <!-- Attendance Summary -->
+    <section class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-2xl font-semibold mb-4">Today's Attendance Summary</h2>
+      <div class="flex items-center mb-4 space-x-4 max-w-md">
+        <input type="text" id="searchInput" placeholder="Search by student name or ID" class="flex-grow border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+      </div>
+      <div class="overflow-auto max-h-[400px]">
+        <table class="min-w-full border border-gray-300 rounded-lg" aria-label="Attendance summary table">
+          <thead class="bg-teal-600 text-white">
+            <tr>
+              <th scope="col" class="px-4 py-2 text-left cursor-pointer" data-sort="student_id">Student ID</th>
+              <th scope="col" class="px-4 py-2 text-left cursor-pointer" data-sort="name">Name</th>
+              <th scope="col" class="px-4 py-2 text-left cursor-pointer" data-sort="attendance_status">Attendance Status</th>
+              <th scope="col" class="px-4 py-2 text-left cursor-pointer" data-sort="last_scan_time">Last Scan Time</th>
+            </tr>
+          </thead>
+          <tbody id="attendanceTableBody" class="bg-white"></tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-between mt-4 max-w-md">
+        <button id="prevPageBtn" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 font-semibold" disabled>
+          Prev
+        </button>
+        <span id="pageInfo" class="font-medium"></span>
+        <button id="nextPageBtn" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 font-semibold" disabled>
+          Next
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../attendance-enhanced.js"></script>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  </script>
+</body>
+</html>

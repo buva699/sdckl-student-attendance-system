@@ -37,3 +37,21 @@ CREATE TABLE IF NOT EXISTS biometric_logs (
 -- Indexes for performance
 CREATE INDEX idx_attendance_date ON attendance(attendance_date);
 CREATE INDEX idx_biometric_scan_timestamp ON biometric_logs(scan_timestamp);
+
+-- Classes table
+CREATE TABLE IF NOT EXISTS classes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Student-Classes join table
+CREATE TABLE IF NOT EXISTS student_classes (
+    student_id INT NOT NULL,
+    class_id INT NOT NULL,
+    PRIMARY KEY (student_id, class_id),
+    CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+    CONSTRAINT fk_class FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE CASCADE
+);

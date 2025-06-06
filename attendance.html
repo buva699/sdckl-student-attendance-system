@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDCKL Attendance - Biometric Attendance Enhanced</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50 flex flex-col">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-900">SDCKL Biometric Attendance Enhanced</h1>
+  </header>
+
+  <main class="flex-grow container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Biometric Scan Panel -->
+    <section class="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+      <i class="fas fa-fingerprint text-6xl text-teal-600 mb-4"></i>
+      <button id="startScanBtn" class="bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition font-semibold focus:outline-none focus:ring-2 focus:ring-teal-400">
+        Start Biometric Scan
+      </button>
+      <button id="pauseScanBtn" class="bg-yellow-500 text-white px-6 py-3 rounded-md hover:bg-yellow-600 transition font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-400 mt-2 hidden">
+        Pause Scan
+      </button>
+      <button id="cancelScanBtn" class="bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition font-semibold focus:outline-none focus:ring-2 focus:ring-red-400 mt-2 hidden">
+        Cancel Scan
+      </button>
+      <div id="scanStatus" class="mt-4 text-center text-gray-700"></div>
+      <div id="scannedStudent" class="mt-4 text-center text-gray-900 font-semibold"></div>
+    </section>
+
+    <!-- Biometric Enrollment Panel -->
+    <section class="bg-white rounded-lg shadow p-6 flex flex-col">
+      <h2 class="text-xl font-semibold mb-4">Enroll Biometric Data</h2>
+      <label for="enrollStudentId" class="mb-2 font-medium text-gray-700">Student ID</label>
+      <input id="enrollStudentId" type="text" placeholder="Enter Student ID" class="mb-4 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400" />
+      <label for="biometricData" class="mb-2 font-medium text-gray-700">Biometric Data (Base64)</label>
+      <textarea id="biometricData" rows="4" placeholder="Paste biometric data here" class="mb-4 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"></textarea>
+      <button id="enrollBtn" class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400">
+        Enroll Biometric Data
+      </button>
+      <div id="enrollStatus" class="mt-4 text-center text-gray-700"></div>
+    </section>
+
+    <!-- Attendance Summary -->
+    <section class="md:col-span-2 bg-white rounded-lg shadow p-6 overflow-auto">
+      <h2 class="text-xl font-semibold mb-4">Today's Attendance Summary</h2>
+      <input id="searchInput" type="text" placeholder="Search by student name or ID" class="mb-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-teal-400" />
+      <table class="min-w-full table-auto border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-teal-600 text-white">
+            <th class="border border-gray-300 px-4 py-2 text-left cursor-pointer" data-sort="student_id">Student ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left cursor-pointer" data-sort="name">Name</th>
+            <th class="border border-gray-300 px-4 py-2 text-left cursor-pointer" data-sort="attendance_status">Attendance Status</th>
+            <th class="border border-gray-300 px-4 py-2 text-left cursor-pointer" data-sort="last_scan_time">Last Scan Time</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTableBody" class="text-gray-900">
+          <!-- Rows will be populated by JS -->
+        </tbody>
+      </table>
+      <div class="mt-4 flex justify-between items-center">
+        <button id="prevPageBtn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 disabled:opacity-50" disabled>Previous</button>
+        <span id="pageInfo" class="text-gray-700"></span>
+        <button id="nextPageBtn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 disabled:opacity-50" disabled>Next</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white shadow p-4 text-center text-gray-600 text-sm">
+    &copy; 2024 SDCKL Attendance Management System
+  </footer>
+
+  <script src="../attendance-enhanced.js"></script>
+</body>
+</html>
